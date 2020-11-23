@@ -1,4 +1,5 @@
 module.exports = {
+  purge: ['./src/**/*.jsx'],
   theme: {
     minWidth: {
       0: '0',

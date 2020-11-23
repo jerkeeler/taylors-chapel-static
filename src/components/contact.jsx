@@ -8,7 +8,7 @@ import {
   Label,
   Select,
   TextArea,
-} from '../components/Inputs';
+} from './inputs';
 
 const RECAPTCHA_KEY = process.env.GATSBY_SITE_RECAPTCHA_KEY;
 if (typeof RECAPTCHA_KEY === 'undefined')
