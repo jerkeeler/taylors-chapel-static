@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Star } from './icons';
 import NavItem from './nav-item';
 
 const Navbar = () => (
@@ -10,14 +11,15 @@ const Navbar = () => (
       </div>
       <div>
         <NavItem to="/#history">History</NavItem>
+        <NavItem to="/#gallery">Gallery</NavItem>
         <NavItem to="/#location">Location</NavItem>
         <NavItem to="/#contact">Contact</NavItem>
-        <NavItem to="/gallery">Gallery</NavItem>
         <NavItem to="/special">Special Events</NavItem>
         <a
           className="rounded-md bg-green-600 text-white p-2 hover:bg-green-800"
           href="/donate"
         >
+          <Star className="w-4 h-4 inline text-yellow-300 -top-0.5 relative mr-0.5" />
           Donate!
         </a>
       </div>
