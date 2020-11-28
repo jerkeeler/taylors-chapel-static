@@ -14,6 +14,7 @@ const Navbar = () => (
         <NavItem to="/#gallery">Gallery</NavItem>
         <NavItem to="/#location">Location</NavItem>
         <NavItem to="/#contact">Contact</NavItem>
+        <NavItem to="/tour">Virtual Tour</NavItem>
         <NavItem to="/special">Special Events</NavItem>
         <a
           className="rounded-md bg-green-600 text-white p-2 hover:bg-green-800"
