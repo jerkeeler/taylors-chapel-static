@@ -1,4 +1,4 @@
-export const elements = ['history', 'gallery', 'location', 'contact'];
+export const elements = ['christmas', 'history', 'gallery', 'location', 'contact'];
 
 export function getScrollElPositions(): Array<number[]> {
   const topOfPage = getCurrentYPos();

@@ -63,6 +63,20 @@ const IndexPage = () => {
 
       <Hero />
 
+      <Section id="christmas">
+        <Section.Title>A Special Taylor's Chapel Christmas</Section.Title>
+        <iframe
+          className="mx-auto"
+          width="800"
+          height="450"
+          src="https://www.youtube.com/embed/F9BAD07LMI0"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="christmas"
+        />
+      </Section>
+
       <Section id="history">
         <Section.Title>History</Section.Title>
         <Section.Text>
