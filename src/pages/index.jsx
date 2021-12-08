@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Contact from '../components/contact';
-
+import ChristmasImage from '../components/christmas-image';
 import Hero from '../components/hero';
 import Layout from '../components/layout';
 import Section from '../components/section';
@@ -63,7 +63,7 @@ const IndexPage = () => {
 
       <Hero />
 
-      <Section id="christmas">
+      {/* <Section id="christmas">
         <Section.Title>A Special Taylor's Chapel Christmas</Section.Title>
         <iframe
           className="mx-auto"
@@ -75,7 +75,13 @@ const IndexPage = () => {
           allowFullScreen
           title="christmas"
         />
+      </Section> */}
+
+      <Section id="christmas">
+        <Section.Title>A Special Taylor's Chapel Christmas</Section.Title>
+        <ChristmasImage />
       </Section>
+
 
       <Section id="history">
         <Section.Title>History</Section.Title>
