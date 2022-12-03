@@ -20,7 +20,7 @@ const ChristmasImage = () => {
       <Img
         className="mx-auto"
         style={{
-          maxWidth: "500px"
+          maxWidth: "800px"
         }}
         fluid={data.image.childImageSharp.fluid}
       />
