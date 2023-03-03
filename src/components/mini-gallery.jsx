@@ -41,7 +41,7 @@ const MiniGallery = () => {
       allFile(
         filter: { relativePath: { glob: "album1/*" } }
         sort: { order: ASC, fields: name }
-        limit: 9
+        limit: 25
       ) {
         nodes {
           childImageSharp {
