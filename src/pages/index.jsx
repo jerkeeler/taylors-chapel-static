@@ -78,7 +78,7 @@ const IndexPage = () => {
       </Section> */}
 
       <Section id="christmas">
-        <Section.Title>A Special Taylor's Chapel Christmas</Section.Title>
+        <Section.Title>A Special Taylor's Easter</Section.Title>
         <ChristmasImage />
       </Section>
 
