@@ -5,7 +5,7 @@ import Img from 'gatsby-image';
 const ChristmasImage = () => {
   const data = useStaticQuery(graphql`
     query {
-      image: file(relativePath: { eq: "2023_christmas_announcement.png" }) {
+      image: file(relativePath: { eq: "2025_christmas_announcement.jpg" }) {
         childImageSharp {
           fluid(maxWidth: 978) {
             ...GatsbyImageSharpFluid
