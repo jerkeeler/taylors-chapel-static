@@ -2,20 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Section from '../components/Section.astro';
-import ChristmasAnnouncement from '../components/ChristmasAnnouncement.astro';
 import Gallery from '../components/Gallery.astro';
 import ContactForm from '../components/ContactForm.astro';
 import ScrollArrow from '../components/ScrollArrow.astro';
 
-const sections = ['christmas', 'history', 'gallery', 'location', 'contact'];
+const sections = ['history', 'gallery', 'location', 'contact'];
 ---
 
 <Layout transparentNav={true}>
   <Hero />
-
-  <Section id="christmas" title="A Special Taylor's Christmas">
-    <ChristmasAnnouncement />
-  </Section>
 
   <Section id="history" title="History" alternate>
     <div class="max-w-4xl mx-auto space-y-6">
