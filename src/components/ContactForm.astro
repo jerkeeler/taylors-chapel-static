@@ -1,5 +1,6 @@
 ---
-// Contact form using Netlify Forms
+// Contact form using Netlify Forms with reCAPTCHA v2
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
 <form
@@ -7,6 +8,7 @@
   method="POST"
   data-netlify="true"
   data-netlify-honeypot="bot-field"
+  data-netlify-recaptcha="true"
   action="/contact/success"
   class="max-w-xl mx-auto space-y-6"
 >
@@ -83,6 +85,13 @@
     ></textarea>
   </div>
 
+  <!-- reCAPTCHA v2 -->
+  {recaptchaSiteKey && (
+    <div class="space-y-2">
+      <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
+    </div>
+  )}
+
   <!-- Submit -->
   <div class="pt-2">
     <button
@@ -94,4 +103,7 @@
   </div>
 </form>
 
-
+<!-- reCAPTCHA Script -->
+{recaptchaSiteKey && (
+  <script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
+)}
