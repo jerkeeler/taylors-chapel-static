@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /contact/success
+
+Sitemap: https://taylorschapel.org/sitemap-index.xml
+
+

@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Message Sent">
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
+
+  <section class="py-24 md:py-32">
+    <div class="section-container text-center">
+      <!-- Success icon -->
+      <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold mb-6">
+        Message Sent Successfully!
+      </h1>
+
+      <p class="text-xl text-themed-muted mb-8 max-w-md mx-auto">
+        Thank you for contacting Taylor's Chapel. We will respond as soon as possible.
+      </p>
+
+      <a
+        href="/"
+        class="btn-primary inline-flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Return Home
+      </a>
+    </div>
+  </section>
+</Layout>
+
+

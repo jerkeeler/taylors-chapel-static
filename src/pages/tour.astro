@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Virtual Tour">
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
+
+  <section class="py-12 md:py-16">
+    <div class="section-container">
+      <h1 class="font-heading text-4xl md:text-5xl font-semibold mb-8 text-center">
+        <span class="relative inline-block">
+          Virtual Tour
+          <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 h-0.5 bg-[var(--color-accent)]"></span>
+        </span>
+      </h1>
+
+      <p class="text-lg text-center text-themed-muted mb-8 max-w-2xl mx-auto">
+        Experience Taylor's Chapel from the comfort of your home. Explore every corner of this historic 1853 chapel with our interactive 3D tour.
+      </p>
+
+      <div class="aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden shadow-2xl">
+        <iframe
+          class="w-full h-full"
+          src="https://my.matterport.com/show/?m=Kvo6wKBL6p1"
+          allowfullscreen
+          allow="xr-spatial-tracking"
+          title="Taylor's Chapel Virtual Tour"
+        ></iframe>
+      </div>
+
+      <div class="mt-8 text-center">
+        <p class="text-themed-muted">
+          Use your mouse or touch to navigate. Click on hotspots to move around the chapel.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+

@@ -1,0 +1,29 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-themed-secondary border-t border-themed pt-8 pb-20">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="flex flex-col items-center space-y-4">
+      <!-- Decorative divider -->
+      <div class="w-24 h-px bg-[var(--color-accent)] opacity-50"></div>
+
+      <!-- Copyright -->
+      <p class="text-themed-muted text-center font-body text-sm">
+        &copy; Taylor's Chapel 2020 - {currentYear}
+      </p>
+
+      <!-- Additional info -->
+      <p class="text-themed-muted text-center text-xs">
+        A National Register of Historic Places site since 1983
+      </p>
+
+      <!-- Theme Toggle -->
+      <div class="pt-2">
+        <ThemeToggle />
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,210 @@
+---
+import { Image } from 'astro:assets';
+
+// Import all album images
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/images/album1/*.jpg',
+  { eager: true }
+);
+
+// Sort images by filename
+const sortedImages = Object.entries(images)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, module], index) => ({
+    src: module.default,
+    alt: `Taylor's Chapel photo ${index + 1}`,
+    id: `gallery-img-${index}`,
+  }));
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+  {sortedImages.map((image, index) => (
+    <button
+      type="button"
+      class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-2"
+      data-index={index}
+      aria-label={`View ${image.alt} in full size`}
+    >
+      <Image
+        src={image.src}
+        alt={image.alt}
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        widths={[300, 400, 500]}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        quality={80}
+      />
+      <!-- Hover overlay -->
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+        <svg
+          class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+          ></path>
+        </svg>
+      </div>
+    </button>
+  ))}
+</div>
+
+<!-- Lightbox Modal -->
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[100] hidden items-center justify-center"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image lightbox"
+>
+  <!-- Backdrop -->
+  <div
+    id="lightbox-backdrop"
+    class="absolute inset-0 bg-black/90 backdrop-blur-sm"
+  ></div>
+
+  <!-- Close button -->
+  <button
+    id="lightbox-close"
+    type="button"
+    class="absolute top-4 right-4 z-10 p-2 text-white/80 hover:text-white transition-colors"
+    aria-label="Close lightbox"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <!-- Previous button -->
+  <button
+    id="lightbox-prev"
+    type="button"
+    class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors"
+    aria-label="Previous image"
+  >
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+    </svg>
+  </button>
+
+  <!-- Next button -->
+  <button
+    id="lightbox-next"
+    type="button"
+    class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors"
+    aria-label="Next image"
+  >
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+
+  <!-- Image container -->
+  <div class="relative z-0 max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+      class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+    />
+  </div>
+
+  <!-- Image counter -->
+  <div
+    id="lightbox-counter"
+    class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm"
+  ></div>
+</div>
+
+<script is:inline define:vars={{ imageCount: sortedImages.length }}>
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  const backdrop = document.getElementById('lightbox-backdrop');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  let currentIndex = 0;
+  const totalImages = imageCount;
+
+  // Get image sources from gallery items
+  function getImageSrc(index) {
+    const item = galleryItems[index];
+    const img = item.querySelector('img');
+    // Get the srcset and parse the largest image
+    const srcset = img.getAttribute('srcset');
+    if (srcset) {
+      const sources = srcset.split(',');
+      const lastSource = sources[sources.length - 1].trim();
+      return lastSource.split(' ')[0];
+    }
+    return img.getAttribute('src');
+  }
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightbox() {
+    const src = getImageSrc(currentIndex);
+    lightboxImage.src = src;
+    lightboxImage.alt = `Taylor's Chapel photo ${currentIndex + 1}`;
+    lightboxCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
+  }
+
+  function showPrevious() {
+    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+    updateLightbox();
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % totalImages;
+    updateLightbox();
+  }
+
+  // Event listeners
+  galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => openLightbox(index));
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', showPrevious);
+  nextBtn.addEventListener('click', showNext);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('hidden')) return;
+
+    switch (e.key) {
+      case 'Escape':
+        closeLightbox();
+        break;
+      case 'ArrowLeft':
+        showPrevious();
+        break;
+      case 'ArrowRight':
+        showNext();
+        break;
+    }
+  });
+</script>
+
+

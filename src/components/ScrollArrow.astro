@@ -1,0 +1,115 @@
+---
+// ScrollArrow component - navigates between sections on the homepage
+interface Props {
+  sections: string[];
+}
+
+const { sections } = Astro.props;
+---
+
+<button
+  id="scroll-arrow"
+  type="button"
+  class="fixed z-40 bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full bg-[var(--color-accent)] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-2"
+  aria-label="Scroll to next section"
+>
+  <!-- Down arrow (default) -->
+  <svg
+    id="arrow-down"
+    class="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+    ></path>
+  </svg>
+  <!-- Up arrow (at bottom) -->
+  <svg
+    id="arrow-up"
+    class="w-6 h-6 hidden"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M5 10l7-7m0 0l7 7m-7-7v18"
+    ></path>
+  </svg>
+</button>
+
+<script is:inline define:vars={{ sections }}>
+  const scrollArrow = document.getElementById('scroll-arrow');
+  const arrowDown = document.getElementById('arrow-down');
+  const arrowUp = document.getElementById('arrow-up');
+  const sectionIds = sections;
+
+  function getScrollPosition() {
+    return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  }
+
+  function isAtBottom() {
+    return (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 50);
+  }
+
+  function getNextSection() {
+    const currentPos = getScrollPosition();
+    const viewportHeight = window.innerHeight;
+
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const elementTop = rect.top + currentPos;
+        // Find the first section that's below current viewport
+        if (elementTop > currentPos + 100) {
+          return el;
+        }
+      }
+    }
+    return null;
+  }
+
+  function updateArrowState() {
+    const nextSection = getNextSection();
+
+    if (isAtBottom() || !nextSection) {
+      arrowDown.classList.add('hidden');
+      arrowUp.classList.remove('hidden');
+    } else {
+      arrowDown.classList.remove('hidden');
+      arrowUp.classList.add('hidden');
+    }
+  }
+
+  function handleClick() {
+    if (isAtBottom() || !getNextSection()) {
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Scroll to next section
+      const nextSection = getNextSection();
+      if (nextSection) {
+        const offsetTop = nextSection.offsetTop - 80; // Account for navbar
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      }
+    }
+  }
+
+  // Event listeners
+  scrollArrow.addEventListener('click', handleClick);
+  window.addEventListener('scroll', updateArrowState);
+  window.addEventListener('resize', updateArrowState);
+
+  // Initial state
+  updateArrowState();
+</script>
+
+

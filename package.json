@@ -1,7 +1,10 @@
 {
-  "name": "",
+  "name": "taylors-chapel",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Taylor's Chapel website - A historic 1853 Greek Revival chapel in Baltimore, Maryland",
+  "author": "Jeremy Keeler <jeremy@keeler.dev>",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,6 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "@iconify-json/lucide": "^1.2.82",
+    "astro": "^5.16.6",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^3.4.19"
   }
 }
