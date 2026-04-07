@@ -1,16 +1,32 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Section from '../components/Section.astro';
 import Gallery from '../components/Gallery.astro';
 import ContactForm from '../components/ContactForm.astro';
 import ScrollArrow from '../components/ScrollArrow.astro';
+import announcementsImage from '../assets/images/announcements.webp';
 
-const sections = ['history', 'gallery', 'location', 'contact'];
+const sections = ['announcements', 'history', 'gallery', 'location', 'contact'];
 ---
 
 <Layout transparentNav={true}>
   <Hero />
+
+  <Section id="announcements" title="Announcements">
+    <div class="max-w-5xl mx-auto">
+      <Image
+        src={announcementsImage}
+        alt="Announcements"
+        class="w-full h-auto rounded-lg shadow-xl"
+        widths={[640, 1024, 1400]}
+        sizes="(max-width: 1024px) 100vw, 1024px"
+        loading="lazy"
+        quality={85}
+      />
+    </div>
+  </Section>
 
   <Section id="history" title="History" alternate>
     <div class="max-w-4xl mx-auto space-y-6">
